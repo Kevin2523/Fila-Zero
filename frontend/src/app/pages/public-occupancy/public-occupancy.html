@@ -1,6 +1,8 @@
-<main class="phone-stage">
-  <section class="phone-card public-card">
-    <header class="topbar">
+<main class="public-stage">
+  <div class="public-container">
+    
+    <!-- Top Header -->
+    <header class="public-header">
       <a class="brand" routerLink="/">
         <span class="brand-mark">F</span>
         <span>Fila-Cero</span>
@@ -8,85 +10,97 @@
       <span class="top-icon">◎</span>
     </header>
 
-    <div class="public-hero">
-      <div class="place-icon">▦</div>
-      <h1>{{ queue.establishment().name }}</h1>
-      <p>{{ queue.establishment().city }}</p>
-      <div class="status-line">
-        <span>Estado actual:</span>
-        <strong class="pill success">{{ queue.establishment().status }}</strong>
-      </div>
-    </div>
-
-    <!-- Secciones Dinámicas según Acceso QR -->
-    @if (isQrAccess()) {
-      <div class="qr-action-container" style="margin: 20px 0; padding: 20px; background: rgba(39, 27, 143, 0.05); border: 2px dashed #271b8f; border-radius: 12px; text-align: center; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);">
-        @if (queue.clientTicket()) {
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <span style="font-size: 32px;">🎟️</span>
-            <h2 style="font-size: 18px; font-weight: 700; color: #271b8f; margin: 0;">Ya tienes un turno activo</h2>
-            <p style="font-size: 28px; font-weight: 800; color: #101828; margin: 5px 0;">{{ queue.clientTicket()?.code }}</p>
-            <p style="color: #667085; font-size: 13px; margin: 0 0 10px 0;">Tu posición: {{ queue.peopleAheadOfClient() }} personas por delante.</p>
-            <a class="btn primary" routerLink="/cliente/clinica-san-rafael" style="display: inline-block; text-decoration: none; padding: 12px 20px; background: #271b8f; color: white; border-radius: 8px; font-weight: 600; width: 85%; font-size: 14px; text-align: center; box-shadow: 0 2px 4px rgba(39, 27, 143, 0.15);">Ver Mi Turno en Tiempo Real</a>
+    <!-- Main Layout Grid -->
+    <div class="public-layout-grid">
+      
+      <!-- Left side: Status and metrics -->
+      <div class="public-main-info">
+        <div class="establishment-hero">
+          <div class="place-icon">▦</div>
+          <h1>{{ queue.establishment().name }}</h1>
+          <p class="city">{{ queue.establishment().city }}</p>
+          <div class="status-line-badge">
+            <span>Estado actual:</span>
+            <strong class="pill success">{{ queue.establishment().status }}</strong>
           </div>
-        } @else if (claimedTicket()) {
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <span style="font-size: 32px;">🎉</span>
-            <h2 style="font-size: 18px; font-weight: 700; color: #12b76a; margin: 0;">¡Turno Reclamado con Éxito!</h2>
-            <p style="font-size: 36px; font-weight: 800; color: #101828; margin: 5px 0;">{{ claimedTicket()?.code }}</p>
-            <p style="color: #667085; font-size: 13px; margin: 0 0 10px 0;">Se ha registrado tu turno en el sistema.</p>
-            <a class="btn success" routerLink="/cliente/clinica-san-rafael" style="display: inline-block; text-decoration: none; padding: 12px 20px; background: #12b76a; color: white; border-radius: 8px; font-weight: 600; width: 85%; font-size: 14px; text-align: center; box-shadow: 0 2px 4px rgba(18, 183, 106, 0.15);">Ir al Portal del Cliente</a>
+        </div>
+
+        <div class="public-metric-grid">
+          <article class="metric-card-custom">
+            <span class="metric-title">Personas en fila</span>
+            <strong class="metric-value">{{ queue.peopleInLine() }}</strong>
+            <small class="metric-desc">personas esperando</small>
+          </article>
+          <article class="metric-card-custom">
+            <span class="metric-title">Tiempo estimado</span>
+            <strong class="metric-value highlight">{{ queue.estimatedMinutes() }}</strong>
+            <small class="metric-desc">minutos aprox. de espera</small>
+          </article>
+        </div>
+        
+        <p class="updated-time">ⓘ Última actualización: hace un momento</p>
+      </div>
+
+      <!-- Right side: Actions (QR Code or Claim Turn) -->
+      <div class="public-action-sidebar">
+        @if (isQrAccess()) {
+          <div class="qr-action-card">
+            @if (queue.clientTicket()) {
+              <div class="status-card-inner">
+                <span class="icon">🎟️</span>
+                <h2>Ya tienes un turno activo</h2>
+                <div class="ticket-code">{{ queue.clientTicket()?.code }}</div>
+                <p class="position-info">Tu posición: <strong>{{ queue.peopleAheadOfClient() }}</strong> personas por delante.</p>
+                <a class="btn-action primary" routerLink="/cliente/clinica-san-rafael">Ver Mi Turno en Tiempo Real</a>
+              </div>
+            } @else if (claimedTicket()) {
+              <div class="status-card-inner">
+                <span class="icon">🎉</span>
+                <h2 style="color: #12b76a;">¡Turno Reclamado!</h2>
+                <div class="ticket-code success">{{ claimedTicket()?.code }}</div>
+                <p class="desc">Se ha registrado tu turno en el sistema de forma presencial.</p>
+                <a class="btn-action success" routerLink="/cliente/clinica-san-rafael">Ir al Portal del Cliente</a>
+              </div>
+            } @else {
+              <div class="status-card-inner">
+                <span class="icon">📍</span>
+                <h2>Escaneo QR Confirmado</h2>
+                <p class="desc">Estás físicamente en el establecimiento. Presiona el botón para tomar tu turno en la fila.</p>
+                @if (queue.establishment().status === 'Abierto') {
+                  <button class="btn-action primary" (click)="onClaimTurn()">Reclamar mi Turno</button>
+                } @else {
+                  <button class="btn-action disabled" disabled>Establecimiento Cerrado</button>
+                }
+              </div>
+            }
           </div>
         } @else {
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <span style="font-size: 32px;">📍</span>
-            <h2 style="font-size: 16px; font-weight: 700; color: #101828; margin: 0;">Escaneo QR Confirmado</h2>
-            <p style="color: #667085; font-size: 13px; margin: 0 0 10px 0;">Estás físicamente en el local. Presiona el botón para obtener tu turno.</p>
+          <div class="qr-info-card">
+            <h2>¿Cómo tomar un turno?</h2>
+            <p class="qr-instructions">
+              Para registrar tu turno y seguir tu avance en tiempo real, debes escanear el código QR impreso físicamente en el establecimiento.
+            </p>
             
-            @if (queue.establishment().status === 'Abierto') {
-              <button class="btn primary" (click)="onClaimTurn()" style="border: none; padding: 14px 20px; background: #271b8f; color: white; border-radius: 8px; font-weight: 700; font-size: 15px; width: 90%; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(39, 27, 143, 0.15);">Reclamar mi Turno</button>
-            } @else {
-              <button class="btn disabled" disabled style="border: none; padding: 14px 20px; background: #eaecf0; color: #98a2b3; border-radius: 8px; font-weight: 700; font-size: 15px; width: 90%; cursor: not-allowed;">Establecimiento Cerrado</button>
-            }
+            <a class="btn-action success" routerLink="/publica/clinica-san-rafael" [queryParams]="{ qr: 'true' }" style="margin-top: 10px; padding: 10px; font-size: 13px;">
+              ⚡ Simular Escaneo Presencial
+            </a>
           </div>
         }
       </div>
-    } @else {
-      <div class="metric-grid">
-        <article class="metric-card">
-          <span>Personas en fila</span>
-          <strong>{{ queue.peopleInLine() }}</strong>
-          <small>personas</small>
-        </article>
-        <article class="metric-card">
-          <span>Tiempo estimado de espera</span>
-          <strong>{{ queue.estimatedMinutes() }}</strong>
-          <small>minutos aprox.</small>
-        </article>
-      </div>
 
-      <p class="updated">ⓘ Última actualización: hace un momento</p>
-
-      <div class="notice">
-        <span>ⓘ</span>
-        <p>Puedes escanear el código QR en el establecimiento para tomar tu turno y ver tu posición en la fila.</p>
-      </div>
-
-      <a class="qr-panel" routerLink="/publica/clinica-san-rafael" [queryParams]="{ qr: 'true' }" aria-label="Abrir vista que simula el QR">
-        <img src="/qr-clinica-san-rafael.svg" alt="QR para obtener turno en Clínica San Rafael">
-        <span>Simular Escaneo QR Presencial</span>
-      </a>
-    }
-
-    <div class="feature-row" style="margin-top: 15px;">
-      <span>◷ 100% Digital</span>
-      <span>⇩ Sin descargas</span>
-      <span>▯ Desde cualquier dispositivo</span>
     </div>
 
-    <footer>
-      Fila-Cero - Gestión de filas de espera<br>
-      Vista pública solo informativa
-    </footer>
-  </section>
+    <!-- Feature list & Footer -->
+    <div class="public-footer-section">
+      <div class="feature-pills">
+        <span>◷ 100% Digital</span>
+        <span>⇩ Sin descargas</span>
+        <span>🛡️ Asignación Segura</span>
+      </div>
+      <footer class="public-footer">
+        Fila-Cero - Plataforma de descentralización y gestión de filas de espera
+      </footer>
+    </div>
+
+  </div>
 </main>

@@ -1,0 +1,31 @@
+<main class="phone-stage">
+  <section class="phone-card client-card" style="padding: 24px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; gap: 20px;">
+    
+    <header style="width: 100%; border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 10px;">
+      <a class="brand" routerLink="/" style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--primary); font-weight: 800; font-size: 22px;">
+        <span class="brand-mark" style="display: inline-grid; width: 26px; height: 26px; place-items: center; border: 2px solid var(--primary); border-radius: 50%; font-size: 14px; font-weight: 900;">F</span>
+        <span>Fila-Cero</span>
+      </a>
+      <p style="color: var(--muted); font-size: 13px; margin: 5px 0 0 0; font-weight: 600;">{{ queue.establishment().name }}</p>
+    </header>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px;">
+      <span style="font-size: 40px; margin-bottom: 5px;">📱</span>
+      <h1 style="font-size: 20px; font-weight: 800; color: var(--text); margin: 0;">Escanea para tu Turno</h1>
+      <p style="color: var(--muted); font-size: 13.5px; margin: 0; max-width: 280px; line-height: 1.4;">Abre la cámara de tu celular y escanea el código para ingresar a la fila de forma presencial.</p>
+      
+      <div style="background: white; padding: 16px; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin: 10px 0;">
+        <img [src]="qrImageUrl()" alt="Código QR Dinámico" style="width: 250px; height: 250px; display: block;" />
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 320px; word-break: break-all;">
+        <code style="font-size: 11px; color: var(--primary-dark); font-weight: 600;">{{ targetUrlText() }}</code>
+      </div>
+    </div>
+
+    <footer style="width: 100%; border-top: 1px solid var(--line); padding-top: 15px; margin-top: 10px;">
+      <a class="btn-action primary" routerLink="/" style="display: inline-block; text-decoration: none; padding: 12px; background: var(--primary); color: white; border-radius: 8px; font-weight: 700; font-size: 14px; width: 100%;">Volver a Ocupación</a>
+    </footer>
+
+  </section>
+</main>
