@@ -74,7 +74,7 @@ flowchart TD
     %% Flujos de interacción del negocio
     QR[Cliente Escanea QR Físico] -->|Registra Presencia| W
     W -->|Consulta / Actualiza Turno| API
-    K -->|Consulta Estado Fila (Solo Lectura)| API
+    K -->|Consulta Estado Fila - Solo Lectura| API
     N -->|Avanza Turno / Llama Siguiente| API
 
     %% Backend a Base de datos
