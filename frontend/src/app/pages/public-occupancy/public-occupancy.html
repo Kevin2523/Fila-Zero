@@ -1,0 +1,57 @@
+<main class="phone-stage">
+  <section class="phone-card public-card">
+    <header class="topbar">
+      <a class="brand" routerLink="/">
+        <span class="brand-mark">F</span>
+        <span>Fila-Cero</span>
+      </a>
+      <span class="top-icon">◎</span>
+    </header>
+
+    <div class="public-hero">
+      <div class="place-icon">▦</div>
+      <h1>{{ queue.establishment().name }}</h1>
+      <p>{{ queue.establishment().city }}</p>
+      <div class="status-line">
+        <span>Estado actual:</span>
+        <strong class="pill success">{{ queue.establishment().status }}</strong>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <article class="metric-card">
+        <span>Personas en fila</span>
+        <strong>{{ queue.peopleInLine() }}</strong>
+        <small>personas</small>
+      </article>
+      <article class="metric-card">
+        <span>Tiempo estimado de espera</span>
+        <strong>{{ queue.estimatedMinutes() }}</strong>
+        <small>minutos aprox.</small>
+      </article>
+    </div>
+
+    <p class="updated">ⓘ Última actualización: 10:24 a.m.</p>
+
+    <div class="notice">
+      <span>ⓘ</span>
+      <p>Puedes escanear el código QR en el establecimiento para tomar tu turno y ver tu posición en la fila.</p>
+    </div>
+
+    <a class="qr-panel" routerLink="/cliente/clinica-san-rafael" aria-label="Abrir vista que simula el QR">
+      <img src="/qr-clinica-san-rafael.svg" alt="QR para obtener turno en Clínica San Rafael">
+      <span>QR presencial de ejemplo</span>
+    </a>
+
+    <div class="feature-row">
+      <span>◷ 100% Digital</span>
+      <span>⇩ Sin descargas</span>
+      <span>▯ Desde cualquier dispositivo</span>
+    </div>
+
+    <footer>
+      Fila-Cero - Gestión de filas de espera<br>
+      Vista pública solo informativa
+    </footer>
+  </section>
+</main>

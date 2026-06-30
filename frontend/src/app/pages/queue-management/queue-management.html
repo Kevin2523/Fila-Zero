@@ -1,0 +1,34 @@
+<app-admin-shell title="Gestión de Filas">
+  <section class="management-grid">
+    <article class="panel queue-list">
+      <h2>Fila de espera</h2>
+      <div class="ticket-list">
+        @for (ticket of queue.waitingTickets(); track ticket.id; let index = $index) {
+          <div class="ticket-row">
+            <strong>{{ index + 1 }}</strong>
+            <span>{{ ticket.code }}</span>
+            <small>♙</small>
+          </div>
+        }
+      </div>
+    </article>
+
+    <article class="panel control-panel">
+      <h2>Control de atención</h2>
+      <div class="current-control">
+        <span>Turno actual</span>
+        <strong>{{ queue.currentTicket()?.code }}</strong>
+        <small>En atención</small>
+      </div>
+
+      <div class="action-row">
+        <button class="success-btn" type="button" (click)="queue.callNext()">▷ Llamar siguiente</button>
+        <button class="blue-btn" type="button" (click)="queue.repeatCurrent()">⟳ Repetir turno</button>
+        <button class="warning-btn" type="button" (click)="queue.skipCurrent()">⊳ Saltar turno</button>
+        <button class="danger-btn" type="button" (click)="queue.cancelCurrent()">× Cancelar turno</button>
+      </div>
+
+      <p class="info-line">ⓘ Al llamar el siguiente turno, este pasará a estado “En atención”.</p>
+    </article>
+  </section>
+</app-admin-shell>

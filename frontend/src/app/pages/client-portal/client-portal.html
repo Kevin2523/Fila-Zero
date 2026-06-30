@@ -1,0 +1,39 @@
+<main class="phone-stage">
+  <section class="phone-card client-card">
+    <header class="topbar compact">
+      <a class="brand" routerLink="/">
+        <span class="brand-mark">F</span>
+        <span>Fila-Cero</span>
+      </a>
+      <span>{{ queue.establishment().name }} - {{ queue.establishment().city }}</span>
+    </header>
+
+    <section class="ticket-hero">
+      <p>Tu turno</p>
+      <h1>{{ queue.clientTicket()?.code }}</h1>
+      <span>Estás en la posición</span>
+      <strong>{{ queue.peopleAheadOfClient() }}</strong>
+      <small>personas delante de ti</small>
+    </section>
+
+    <div class="client-stats">
+      <article>
+        <span>Tiempo estimado de espera</span>
+        <strong>25 - 35 min</strong>
+      </article>
+      <article>
+        <span>Personas en fila</span>
+        <strong>{{ queue.peopleInLine() }} ♙</strong>
+      </article>
+    </div>
+
+    <section class="how-card">
+      <h2>¿Cómo funciona?</h2>
+      <p><span>1</span> Espera tu turno donde quieras</p>
+      <p><span>2</span> Te notificaremos cuando falten 3 turnos</p>
+      <p><span>3</span> Acércate al establecimiento cuando sea tu turno</p>
+    </section>
+
+    <button class="danger-soft" type="button">⊗ Cancelar mi turno</button>
+  </section>
+</main>

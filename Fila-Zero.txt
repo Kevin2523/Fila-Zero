@@ -1,0 +1,100 @@
+Universidad Tecnológica de Panamá
+Centro Regional de Coclé
+Departamento de Programación
+FILA-CERO
+Descentralización y Gestión de Tiempos de Espera
+Proyecto Final
+Participantes
+Natalia Bernal
+Kevin Mena
+Wilmer Morales
+Profesora: Anais Lara
+1   Resumen Ejecutivo
+Fila-Cero es una plataforma web de gestión de filas de espera que elimina la dependencia de hardware físico (tiqueteras, dispensadores, pantallas) mediante una arquitectura 100% en la nube. Los clientes acceden a su turno escaneando un código QR presente físicamente en el establecimiento; el sistema les muestra su número de turno y les permite ver cuántas personas tienen por delante desde su celular, permitiéndoles esperar donde quieran.
+Además, cualquier persona puede consultar desde una URL pública cuántas personas hay en fila en un establecimiento antes de desplazarse físicamente, sin necesidad de asignarse un turno de forma remota. Esta función de consulta de ocupación es de solo lectura para prevenir la asignación malintencionada de turnos desde fuera del local.
+El modelo de negocio es B2B: se licencia el panel administrativo directamente a clínicas, restaurantes, sucursales bancarias y municipios. El impacto esperado es la reducción de costos operativos físicos, la eliminación de aglomeraciones y la mejora sustancial de la experiencia del usuario. El objetivo principal es digitalizar la gestión de turnos en Panamá aprovechando herramientas que el 100% de los usuarios ya domina: el navegador web y el escaneo de códigos QR.
+2   Marco de Conceptualización y Justificación
+2.1   Identificación del Problema (Pain Point)
+Los sistemas tradicionales de gestión de filas generan múltiples fricciones operativas y económicas en negocios e instituciones panameñas:
+Los sistemas tradicionales exigen hardware de un solo propósito (dispensadores físicos) con alto costo de adquisición y mantenimiento.
+La necesidad de anunciar turnos obliga a los comercios a instalar y mantener infraestructura de audio y video.
+Se produce un aumento dramático de la ansiedad en el cliente al no poder disponer libremente de su tiempo durante la espera.
+El administrador carece de métricas dinámicas si el sistema físico sufre una avería, dejando la operación sin visibilidad.
+Agrupar personas en salas cerradas genera riesgos sanitarios y una experiencia de usuario negativa.
+Las personas no pueden saber de antemano si un lugar está lleno antes de desplazarse, lo que genera viajes innecesarios y frustración.
+2.2   Estado del Arte
+Fila-Cero compite contra dos categorías de soluciones existentes:
+Característica Operativa
+Tiqueteras Físicas
+Apps de Gestión Móvil
+Fila-Cero
+Inversión en Hardware
+Alta (dispensadores y pantallas)
+Media (kioskos o tablets)
+Cero (100% Cloud + QR Impreso)
+Adopción del Cliente
+Rápida (tomar papel)
+Lenta (exige descargar App)
+Inmediata (escaneo QR)
+Mantenimiento
+Costoso (papel, tinta, piezas)
+Soporte a usuarios finales
+Nulo para el cliente final
+Control Administrativo
+Botoneras análogas y cables
+Ecosistemas cerrados
+Dashboard Web en Tiempo Real
+Vista Remota de Ocupación
+No disponible
+Limitada (requiere App)
+Sí, pública desde cualquier URL
+Las tiqueteras físicas son la solución dominante en el mercado local, pero dependen de papel térmico, consumibles y hardware susceptible a fallos. Las aplicaciones móviles de gestión (como Qminder o Waitwhile) exigen que el cliente descargue una app, lo que genera fricción de adopción significativa y ninguna ofrece una vista pública de ocupación accesible desde cualquier navegador sin registro. Fila-Cero elimina todas estas barreras.
+2.3   Justificación Estratégica
+Fila-Cero es necesario en el contexto actual debido a la madurez tecnológica y el cambio en el comportamiento de los usuarios, quienes buscan soluciones inmediatas, sin fricción y accesibles desde cualquier dispositivo. El uso masivo de smartphones y la familiaridad con los códigos QR permiten implementar una solución 100% web de adopción instantánea.
+Al mismo tiempo, las empresas necesitan reducir costos operativos y mejorar la eficiencia. La posibilidad de que el cliente consulte la ocupación del local antes de salir de su casa reduce la carga en horas pico y mejora la distribución orgánica de la demanda. En este escenario, Fila-Cero se posiciona como una alternativa moderna, eficiente y alineada con las demandas actuales del mercado panameño.
+3   Objetivos del Proyecto
+3.1   Objetivo General
+Desarrollar e implementar una plataforma web de gestión de filas de espera, denominada Fila-Cero, que elimine la dependencia de hardware físico mediante una arquitectura 100% en la nube, mejorando la experiencia del usuario y reduciendo los costos operativos de empresas e instituciones en Panamá.
+3.2   Objetivos Específicos
+Diseñar y desarrollar los tres componentes principales del sistema: la vista pública de ocupación, el portal de turno del cliente y el dashboard administrativo.
+Implementar un mecanismo de asignación de turnos exclusivamente presencial mediante escaneo de código QR, garantizando la integridad y seguridad de la fila contra manipulaciones remotas.
+Habilitar la consulta pública de ocupación de cualquier establecimiento desde cualquier dispositivo con acceso a internet, sin necesidad de registro ni descarga de aplicaciones.
+Validar la viabilidad técnica y operativa del sistema mediante la ejecución de al menos un proyecto piloto en un establecimiento local durante el semestre.
+Demostrar la viabilidad económica del modelo SaaS B2B en el mercado panameño, orientado a sectores como salud, restaurantes, banca y gobierno local.
+Eliminar el consumo de papel térmico y consumibles físicos en los establecimientos clientes, contribuyendo a la reducción de costos operativos y riesgos sanitarios por aglomeración.
+4   Solución Tecnológica
+4.1   Arquitectura del Sistema
+Fila-Cero opera sobre tres vistas principales integradas en una arquitectura web en la nube:
+Vista Pública de Ocupación (Solo lectura)
+Cualquier persona puede acceder desde su navegador a una URL pública del establecimiento (por ejemplo: filacero.com/clinica-nacional) y ver en tiempo real cuántas personas hay actualmente en fila. Esta vista es de solo lectura: permite conocer la ocupación del lugar antes de desplazarse, pero no permite asignarse un turno. Esta restricción es intencional y crítica: al requerir presencia física para obtener un turno (mediante el escaneo del QR in situ), se previene que personas externas asignen turnos de forma malintencionada o automatizada.
+Portal de Turno del Cliente (Web App ligera, vía QR presencial)
+El cliente escanea el código QR físico ubicado en el establecimiento y accede desde su navegador a una web app sin necesidad de descarga ni registro. En esta vista puede ver el número de turno que le fue asignado, cuántas personas tiene por delante en la fila y una estimación del tiempo de espera. La página se actualiza automáticamente, permitiéndole al cliente monitorear su turno desde cualquier lugar: su auto, la cafetería o su casa, sin tener que permanecer en el local.
+Dashboard Administrativo
+El operador del negocio accede a un panel web interactivo desde cualquier dispositivo con conexión a internet. Desde este panel puede avanzar turnos manualmente, gestionar el estado de la fila en tiempo real, pausar o cerrar la atención, y consultar estadísticas de atención acumuladas por período (turnos atendidos, tiempo promedio, horas pico).
+4.2   Flujo de Uso del Sistema
+Consulta previa (opcional): El cliente visita la URL pública del establecimiento desde cualquier dispositivo y consulta cuántas personas hay en fila antes de salir.
+Llegada y escaneo: El cliente llega al local y escanea el código QR físico con la cámara de su celular.
+Asignación de turno: El sistema asigna automáticamente el siguiente número de turno disponible y lo muestra en pantalla.
+Seguimiento remoto: El cliente puede cerrar o minimizar el navegador y regresar cuando quiera para ver cuántas personas le quedan por delante. No necesita quedarse en el local.
+Atención: El administrador avanza el turno desde el dashboard cuando el cliente anterior es atendido. El sistema refleja el cambio en tiempo real para todos los clientes activos.
+4.3   Ventajas Técnicas Clave
+Inversión en hardware cero: solo se requiere imprimir un código QR y tener una computadora o tablet en recepción.
+Adopción inmediata: el cliente opera desde su navegador sin descargas, instalaciones ni cuentas.
+Seguimiento remoto del turno: el cliente puede ver cuántas personas tiene por delante desde cualquier lugar con internet.
+Vista pública de ocupación: reduce desplazamientos innecesarios y distribuye la demanda de forma orgánica.
+Seguridad anti-abuso: la asignación de turnos requiere escaneo QR presencial, evitando la manipulación remota de la fila.
+100% Digital y Paperless: elimina el consumo de papel térmico, toners y consumibles físicos.
+Alta disponibilidad: al ser una solución cloud-native, no depende de hardware local que pueda fallar.
+5   Modelo de Negocio
+5.1   Estrategia B2B
+Fila-Cero no es una aplicación de consumo masivo. Es una suite de gestión operativa licenciada directamente a empresas locales: clínicas, restaurantes, sucursales bancarias y municipios. La monetización se genera mediante un pago periódico por cada establecimiento que accede al Dashboard Administrativo Web. El cliente final (el usuario en fila) nunca paga ni necesita crear una cuenta.
+5.2   Despliegue Inmediato
+A diferencia de competidores que requieren cableado, instalación de kioskos o capacitación técnica, el costo de instalación física de Fila-Cero es virtualmente cero. El equipo entrega la URL pública del establecimiento, el código QR listo para imprimir y las credenciales de acceso al dashboard administrativo. El cliente comercial puede estar operativo en minutos desde el momento de la contratación.
+6   Impacto Esperado
+6.1   Impacto Directo
+Eliminación del consumo de papel térmico y consumibles físicos en los establecimientos cliente.
+Reducción de costos operativos: las empresas dejan de gastar miles de dólares anuales en tiqueteras, toners y pantallas.
+Mejora de la experiencia del cliente: los usuarios pueden ver su posición en la fila y esperar desde cualquier lugar, reduciendo la ansiedad.
+Reducción de desplazamientos innecesarios: la vista pública de ocupación permite al ciudadano decidir si vale la pena ir al local antes de salir.
+Acceso a métricas de atención en tiempo real para la toma de decisiones del administrador.
+Reducción de riesgos sanitarios al eliminar las aglomeraciones en salas de espera cerradas.

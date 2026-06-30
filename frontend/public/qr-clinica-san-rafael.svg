@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="QR Fila-Cero Clinica San Rafael">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <rect x="32" y="32" width="448" height="448" rx="18" fill="#ffffff" stroke="#271b8f" stroke-width="10"/>
+  <g fill="#101828">
+    <path d="M72 72h112v112H72zM328 72h112v112H328zM72 328h112v112H72z"/>
+    <path fill="#fff" d="M96 96h64v64H96zM352 96h64v64h-64zM96 352h64v64H96z"/>
+    <path d="M112 112h32v32h-32zM368 112h32v32h-32zM112 368h32v32h-32z"/>
+    <path d="M216 72h32v32h-32zM280 72h24v32h-24zM216 120h88v24h-88zM248 160h32v56h-32z"/>
+    <path d="M208 208h32v32h-32zM272 208h32v32h-32zM336 208h32v32h-32zM400 208h40v32h-40z"/>
+    <path d="M216 264h56v24h-56zM304 264h32v64h-32zM368 264h72v24h-72z"/>
+    <path d="M216 320h24v88h-24zM264 320h72v24h-72zM360 320h32v32h-32zM416 320h24v88h-24z"/>
+    <path d="M256 376h32v64h-32zM320 376h72v24h-72zM320 424h32v24h-32zM376 424h64v24h-64z"/>
+    <path d="M72 216h32v40H72zM120 216h56v24h-56zM160 264h24v40h-24zM72 280h64v24H72z"/>
+  </g>
+  <rect x="178" y="232" width="156" height="48" rx="8" fill="#ffffff"/>
+  <text x="256" y="262" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#271b8f">/cliente</text>
+</svg>

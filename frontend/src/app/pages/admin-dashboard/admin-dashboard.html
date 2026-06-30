@@ -1,0 +1,71 @@
+<app-admin-shell title="Dashboard">
+  <section class="dashboard-grid">
+    <article class="stat-card">
+      <span>Turno actual</span>
+      <strong class="accent">{{ queue.currentTicket()?.code }}</strong>
+      <small class="green">En atención</small>
+    </article>
+    <article class="stat-card">
+      <span>Siguiente turno</span>
+      <strong>{{ queue.nextTicket().code }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Personas en fila</span>
+      <strong class="accent">{{ queue.peopleInLine() }}</strong>
+      <small>personas</small>
+    </article>
+    <article class="stat-card">
+      <span>Tiempo estimado de espera</span>
+      <strong class="accent">{{ queue.estimatedMinutes() }}</strong>
+      <small>minutos</small>
+    </article>
+  </section>
+
+  <section class="dashboard-main">
+    <article class="panel chart-panel">
+      <h2>Personas en fila <span>(últimas 6 horas)</span></h2>
+      <div class="chart">
+        @for (point of queue.chartPoints; track $index) {
+          <i [style.height.%]="point * 2.1"></i>
+        }
+      </div>
+      <div class="chart-labels">
+        @for (label of queue.chartLabels; track $index) {
+          <span>{{ label }}</span>
+        }
+      </div>
+    </article>
+
+    <article class="panel status-panel">
+      <h2>Estado de la atención</h2>
+      <strong class="pill success">{{ queue.establishment().status }}</strong>
+      <div>
+        <span>Horario de atención</span>
+        <p>{{ queue.establishment().schedule }}</p>
+      </div>
+      <button class="primary-btn" type="button" (click)="queue.toggleAttention()">▣ Cerrar atención</button>
+    </article>
+  </section>
+
+  <section class="panel today-panel">
+    <h2>Atenciones de hoy</h2>
+    <div class="today-grid">
+      <article>
+        <span>Atendidos</span>
+        <strong class="green">142</strong>
+      </article>
+      <article>
+        <span>En atención</span>
+        <strong class="blue">2</strong>
+      </article>
+      <article>
+        <span>Cancelados</span>
+        <strong class="red">3</strong>
+      </article>
+      <article>
+        <span>Promedio de atención</span>
+        <strong>18 min</strong>
+      </article>
+    </div>
+  </section>
+</app-admin-shell>

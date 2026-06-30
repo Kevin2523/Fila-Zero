@@ -1,0 +1,36 @@
+<main class="admin-page">
+  <aside class="sidebar">
+    <a class="brand brand-dark" routerLink="/admin/dashboard">
+      <span class="brand-mark">F</span>
+      <span>Fila-Cero</span>
+    </a>
+
+    <nav class="side-nav" aria-label="Administración">
+      <a routerLink="/admin/dashboard" routerLinkActive="active">
+        <span>⌂</span>
+        Dashboard
+      </a>
+      <a routerLink="/admin/filas" routerLinkActive="active">
+        <span>☷</span>
+        Gestión de Filas
+      </a>
+    </nav>
+
+    <a class="logout" routerLink="/publica/clinica-san-rafael">
+      <span>↪</span>
+      Cerrar sesión
+    </a>
+  </aside>
+
+  <section class="admin-content">
+    <header class="admin-header">
+      <h1>{{ title() }}</h1>
+      <button class="place-switch" type="button">
+        Clínica San Rafael - Penonomé
+        <span>⌄</span>
+      </button>
+    </header>
+
+    <ng-content />
+  </section>
+</main>
