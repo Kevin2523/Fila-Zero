@@ -85,25 +85,32 @@ flowchart TD
 
 ## 🚀 Flujo de Trabajo en Git
 
-Para trabajar de manera limpia y evitar conflictos de código en las ramas principales, seguiremos estas pautas:
+Para facilitar la integración de las vistas que dependen unas de otras y evitar la fricción de abrir Pull Requests constantes para pruebas rápidas, **el equipo trabajará directamente sobre la rama `dev`**.
 
-1. **Ramas por Funcionalidad:** Cada uno trabajará en su propia rama de desarrollo basada en su vista:
-   * Kevin: `feat/public-occupancy`
-   * Wilmer: `feat/client-portal`
-   * Natalia: `feat/admin-dashboard`
-2. **Creación de Ramas:**
+### Flujo diario en la rama `dev`:
+
+1. **Antes de empezar a trabajar (Actualizar rama local):**
+   Asegúrate de traer los últimos cambios que hayan subido tus compañeros para evitar conflictos:
    ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b nombre-de-tu-rama
+   git checkout dev
+   git pull origin dev
    ```
-3. **Publicación y Commits:** Realiza commits descriptivos e incrementales.
+
+2. **Realizar Commits descriptivos:**
+   Agrega tus cambios e intenta hacer commits específicos indicando qué área estás modificando:
    ```bash
    git add .
-   git commit -m "feat(UI): agregados elementos visuales de la vista"
-   git push origin nombre-de-tu-rama
+   git commit -m "feat(public-occupancy): agregado dashboard de ocupación"
    ```
-4. **Pull Requests (PR):** Al finalizar su vista, abran un PR hacia la rama `main` en GitHub para revisión del equipo antes de fusionar.
+
+3. **Subir cambios directamente:**
+   Sube tus aportes directamente a la rama de desarrollo:
+   ```bash
+   git push origin dev
+   ```
+
+4. **Rama `main` (Estable):**
+   La rama `main` quedará reservada para versiones estables listas para entrega. Solo se realizarán fusiones (`merge`) de `dev` a `main` cuando se finalice una etapa importante y probada del proyecto.
 
 > [!IMPORTANT]
 > **Estado de Desarrollo Actual:**
