@@ -51,15 +51,82 @@ export class QueueData {
 
   readonly peopleInLine = computed(() => this.waitingTickets().length + (this.currentTicket() ? 1 : 0));
   readonly estimatedMinutes = computed(() => this.peopleInLine() * 5);
-  readonly clientTicket = computed(() => this.tickets().find((ticket) => ticket.code === 'A-027'));
+  readonly userTicketCode = signal<string | null>(
+    typeof window !== 'undefined' ? localStorage.getItem('fila-cero-ticket') : null
+  );
+
+  readonly clientTicket = computed(() => {
+    const code = this.userTicketCode();
+    if (!code) return null;
+    return this.tickets().find((ticket) => ticket.code === code) || null;
+  });
+
   readonly peopleAheadOfClient = computed(() => {
     const client = this.clientTicket();
-    if (!client) return 0;
+    if (!client || client.status !== 'espera') return 0;
     return this.waitingTickets().filter((ticket) => ticket.id < client.id).length;
+  });
+
+  readonly estimatedClientMinutes = computed(() => {
+    const ahead = this.peopleAheadOfClient();
+    return (ahead + 1) * 5;
   });
 
   readonly chartPoints = [10, 16, 25, 28, 20, 27, 21, 28, 26];
   readonly chartLabels = ['7am', '', '8am', '9am', '', '10am', '11am', '', '12pm'];
+
+  claimTurn(): Ticket {
+    const currentTickets = this.tickets();
+    let nextId = 1;
+    let nextNum = 1;
+    if (currentTickets.length > 0) {
+      const ids = currentTickets.map(t => t.id);
+      nextId = Math.max(...ids) + 1;
+      
+      const codes = currentTickets.map(t => {
+        const match = t.code.match(/\d+/);
+        return match ? parseInt(match[0], 10) : 0;
+      });
+      nextNum = Math.max(...codes) + 1;
+    }
+    
+    const paddedNum = String(nextNum).padStart(3, '0');
+    const code = `A-${paddedNum}`;
+    
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'p.m.' : 'a.m.';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const timeStr = `${hours}:${minutes} ${ampm}`;
+
+    const newTicket: Ticket = {
+      id: nextId,
+      code: code,
+      status: 'espera',
+      createdAt: timeStr
+    };
+    
+    this.tickets.update(t => [...t, newTicket]);
+    this.userTicketCode.set(code);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('fila-cero-ticket', code);
+    }
+    return newTicket;
+  }
+
+  cancelMyTurn(): void {
+    const client = this.clientTicket();
+    if (!client) return;
+    this.tickets.update((tickets) =>
+      tickets.map((t) => (t.id === client.id ? { ...t, status: 'cancelado' } : t))
+    );
+    this.userTicketCode.set(null);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('fila-cero-ticket');
+    }
+  }
 
   callNext(): void {
     const current = this.currentTicket();
