@@ -8,32 +8,41 @@
       <span>{{ queue.establishment().name }} - {{ queue.establishment().city }}</span>
     </header>
 
-    <section class="ticket-hero">
-      <p>Tu turno</p>
-      <h1>{{ queue.clientTicket()?.code }}</h1>
-      <span>Estás en la posición</span>
-      <strong>{{ queue.peopleAheadOfClient() }}</strong>
-      <small>personas delante de ti</small>
-    </section>
+    @if (queue.clientTicket()) {
+      <section class="ticket-hero">
+        <p>Tu turno</p>
+        <h1>{{ queue.clientTicket()?.code }}</h1>
+        <span>Estás en la posición</span>
+        <strong>{{ queue.peopleAheadOfClient() }}</strong>
+        <small>personas delante de ti</small>
+      </section>
 
-    <div class="client-stats">
-      <article>
-        <span>Tiempo estimado de espera</span>
-        <strong>25 - 35 min</strong>
-      </article>
-      <article>
-        <span>Personas en fila</span>
-        <strong>{{ queue.peopleInLine() }} ♙</strong>
-      </article>
-    </div>
+      <div class="client-stats">
+        <article>
+          <span>Tiempo estimado de espera</span>
+          <strong>{{ queue.estimatedClientMinutes() }} min aprox.</strong>
+        </article>
+        <article>
+          <span>Personas en fila</span>
+          <strong>{{ queue.peopleInLine() }} ♙</strong>
+        </article>
+      </div>
 
-    <section class="how-card">
-      <h2>¿Cómo funciona?</h2>
-      <p><span>1</span> Espera tu turno donde quieras</p>
-      <p><span>2</span> Te notificaremos cuando falten 3 turnos</p>
-      <p><span>3</span> Acércate al establecimiento cuando sea tu turno</p>
-    </section>
+      <section class="how-card">
+        <h2>¿Cómo funciona?</h2>
+        <p><span>1</span> Espera tu turno donde quieras</p>
+        <p><span>2</span> Te notificaremos cuando falten 3 turnos</p>
+        <p><span>3</span> Acércate al establecimiento cuando sea tu turno</p>
+      </section>
 
-    <button class="danger-soft" type="button">⊗ Cancelar mi turno</button>
+      <button class="danger-soft" type="button" (click)="queue.cancelMyTurn()">⊗ Cancelar mi turno</button>
+    } @else {
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 75%; padding: 24px; text-align: center; gap: 16px;">
+        <span style="font-size: 48px;">🎫</span>
+        <h2 style="font-size: 20px; font-weight: 700; color: #101828; margin: 0;">No tienes un turno activo</h2>
+        <p style="color: #667085; font-size: 14px; margin: 0 0 8px 0; line-height: 1.5;">Escanea el código QR impreso en el establecimiento para tomar un turno.</p>
+        <a class="btn primary" routerLink="/" style="display: inline-block; text-decoration: none; padding: 12px 24px; background: #271b8f; color: white; border-radius: 8px; font-weight: 600; box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);">Ver Ocupación Pública</a>
+      </div>
+    }
   </section>
 </main>
