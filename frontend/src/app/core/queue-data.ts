@@ -47,7 +47,7 @@ export class QueueData {
     this.tickets().find((ticket) => ticket.status === 'atencion')
   );
 
-  readonly nextTicket = computed(() => this.waitingTickets()[0]);
+  readonly nextTicket = computed<Ticket | undefined>(() => this.waitingTickets()[0]);
 
   readonly peopleInLine = computed(() => this.waitingTickets().length + (this.currentTicket() ? 1 : 0));
   readonly estimatedMinutes = computed(() => this.peopleInLine() * 5);

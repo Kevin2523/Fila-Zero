@@ -7,7 +7,7 @@
     </article>
     <article class="stat-card">
       <span>Siguiente turno</span>
-      <strong>{{ queue.nextTicket().code }}</strong>
+      <strong>{{ queue.nextTicket()?.code || '-' }}</strong>
     </article>
     <article class="stat-card">
       <span>Personas en fila</span>
@@ -24,10 +24,31 @@
   <section class="dashboard-main">
     <article class="panel chart-panel">
       <h2>Personas en fila <span>(últimas 6 horas)</span></h2>
-      <div class="chart">
-        @for (point of queue.chartPoints; track $index) {
-          <i [style.height.%]="point * 2.1"></i>
-        }
+      <div class="chart-container">
+        <svg viewBox="0 0 800 180" class="svg-chart" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4f2fc4" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#4f2fc4" stop-opacity="0.00" />
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="20" y1="20" x2="780" y2="20" stroke="#f1f5f9" stroke-width="1" />
+          <line x1="20" y1="55" x2="780" y2="55" stroke="#f1f5f9" stroke-width="1" />
+          <line x1="20" y1="90" x2="780" y2="90" stroke="#f1f5f9" stroke-width="1" />
+          <line x1="20" y1="125" x2="780" y2="125" stroke="#f1f5f9" stroke-width="1" />
+          <line x1="20" y1="160" x2="780" y2="160" stroke="#f1f5f9" stroke-width="1" />
+          
+          <!-- Area fill -->
+          <path [attr.d]="svgPaths().areaPath" fill="url(#chartGradient)" />
+          <!-- Smooth Line -->
+          <path [attr.d]="svgPaths().linePath" fill="none" stroke="#4f2fc4" stroke-width="3" stroke-linecap="round" />
+          
+          <!-- Dots -->
+          @for (c of svgPaths().coords; track $index) {
+            <circle [attr.cx]="c.x" [attr.cy]="c.y" r="4.5" fill="#fff" stroke="#4f2fc4" stroke-width="2.5" class="chart-dot" />
+          }
+        </svg>
       </div>
       <div class="chart-labels">
         @for (label of queue.chartLabels; track $index) {
@@ -38,12 +59,16 @@
 
     <article class="panel status-panel">
       <h2>Estado de la atención</h2>
-      <strong class="pill success">{{ queue.establishment().status }}</strong>
+      <strong class="pill" [class.success]="queue.establishment().status === 'Abierto'" [class.danger]="queue.establishment().status === 'Cerrado'">
+        {{ queue.establishment().status }}
+      </strong>
       <div>
         <span>Horario de atención</span>
         <p>{{ queue.establishment().schedule }}</p>
       </div>
-      <button class="primary-btn" type="button" (click)="queue.toggleAttention()">▣ Cerrar atención</button>
+      <button class="primary-btn" type="button" (click)="queue.toggleAttention()">
+        {{ queue.establishment().status === 'Abierto' ? '▣ Cerrar atención' : '▣ Abrir atención' }}
+      </button>
     </article>
   </section>
 
