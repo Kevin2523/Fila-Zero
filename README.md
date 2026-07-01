@@ -184,14 +184,14 @@ erDiagram
 
     roles {
         int id PK
-        string nombre UNIQUE
+        string nombre
     }
 
     usuarios {
         int id PK
         int rol_id FK
         string nombre
-        string correo UNIQUE
+        string correo
         string password_hash
         boolean activo
         timestamp creado_en
@@ -200,7 +200,7 @@ erDiagram
     establecimientos {
         int id PK
         string nombre
-        string slug UNIQUE
+        string slug
         string ciudad
         string direccion
         enum estado
@@ -212,8 +212,8 @@ erDiagram
     }
 
     usuario_establecimiento {
-        int usuario_id PK, FK
-        int establecimiento_id PK, FK
+        int usuario_id PK,FK
+        int establecimiento_id PK,FK
     }
 
     filas {
@@ -232,7 +232,7 @@ erDiagram
         int fila_id FK
         string codigo
         int numero
-        string token_cliente UNIQUE
+        string token_cliente
         enum estado
         enum origen
         timestamp creado_en
