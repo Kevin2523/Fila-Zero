@@ -20,8 +20,8 @@ export class PublicOccupancy implements OnInit {
     });
   }
 
-  onClaimTurn() {
-    const ticket = this.queue.claimTurn();
+  async onClaimTurn() {
+    const ticket = await this.queue.claimTurn();
     this.claimedTicket.set(ticket);
   }
 }

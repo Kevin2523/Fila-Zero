@@ -22,13 +22,16 @@ export class QrView implements OnInit {
   }
 
   readonly qrImageUrl = computed(() => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4300';
+    const host = this.queue.localIp();
+    const port = typeof window !== 'undefined' ? window.location.port : '4300';
+    const origin = `http://${host}${port ? ':' + port : ''}`;
     const targetUrl = `${origin}/publica/${this.slug()}?qr=true`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(targetUrl)}`;
   });
 
   readonly targetUrlText = computed(() => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4300';
-    return `${origin}/publica/${this.slug()}?qr=true`;
+    const host = this.queue.localIp();
+    const port = typeof window !== 'undefined' ? window.location.port : '4300';
+    return `http://${host}${port ? ':' + port : ''}/publica/${this.slug()}?qr=true`;
   });
 }

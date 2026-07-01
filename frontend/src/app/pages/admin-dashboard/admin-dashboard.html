@@ -77,19 +77,19 @@
     <div class="today-grid">
       <article>
         <span>Atendidos</span>
-        <strong class="green">142</strong>
+        <strong class="green">{{ queue.stats().atendidos }}</strong>
       </article>
       <article>
         <span>En atención</span>
-        <strong class="blue">2</strong>
+        <strong class="blue">{{ queue.stats().enAtencion }}</strong>
       </article>
       <article>
         <span>Cancelados</span>
-        <strong class="red">3</strong>
+        <strong class="red">{{ queue.stats().cancelados }}</strong>
       </article>
       <article>
         <span>Promedio de atención</span>
-        <strong>18 min</strong>
+        <strong>{{ queue.stats().promedio }}</strong>
       </article>
     </div>
   </section>
