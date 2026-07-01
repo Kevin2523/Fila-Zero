@@ -174,13 +174,13 @@ El diseño relacional sigue la siguiente estructura de entidades definida en la 
 
 ```mermaid
 erDiagram
-    roles ||--o{ usuarios : "tiene"
-    usuarios ||--o{ usuario_establecimiento : "administra"
-    establecimientos ||--o{ usuario_establecimiento : "es administrado por"
-    establecimientos ||--o{ filas : "tiene"
-    filas ||--o{ turnos : "tiene"
-    turnos ||--o{ eventos_turno : "genera"
-    usuarios ||--o{ eventos_turno : "registra"
+    roles ||--o{ usuarios : tiene
+    usuarios ||--o{ usuario_establecimiento : administra
+    establecimientos ||--o{ usuario_establecimiento : administra
+    establecimientos ||--o{ filas : tiene
+    filas ||--o{ turnos : tiene
+    turnos ||--o{ eventos_turno : genera
+    usuarios ||--o{ eventos_turno : registra
 
     roles {
         int id PK
@@ -212,8 +212,8 @@ erDiagram
     }
 
     usuario_establecimiento {
-        int usuario_id PK,FK
-        int establecimiento_id PK,FK
+        int usuario_id PK
+        int establecimiento_id PK
     }
 
     filas {
