@@ -1322,32 +1322,14 @@ footer {
   cursor: not-allowed;
 }
 
-/* Footer & features section */
+/* Footer section */
 .public-footer-section {
   border-top: 1px solid #e2e8f0;
-  padding: 24px;
+  padding: 18px 24px;
   background: #f8fafc;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.feature-pills {
-  display: flex;
   justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.feature-pills span {
-  font-size: 12px;
-  color: #475467;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: 500;
+  align-items: center;
 }
 
 .public-footer {
